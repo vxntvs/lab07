@@ -21,4 +21,7 @@ target_link_libraries(solver formatter)
 install(TARGETS solver RUNTIME DESTINATION bin)
 
 # Подключаем конфиг CPack
+enable_testing()
+add_test(NAME dummy_test COMMAND solver)
+
 include(CPackConfig.cmake)
