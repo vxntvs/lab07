@@ -1,27 +1,22 @@
-name: CMake Build
+name: CMake CI
 
-on:
-  push:
-    branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
+on: [push, pull_request]
 
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-
-    - name: Install CMake
-      run: sudo apt-get update && sudo apt-get install -y cmake
+      with:
+        submodules: recursive
 
     - name: Configure CMake
-      run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+      run: cmake -H. -B_build -DBUILD_TESTS=ON
 
-    - name: Build Project
+    - name: Build project
       run: cmake --build _build
 
-    - name: Install Project
-      run: cmake --build _build --target install
+    - name: Run Tests
+      run: cmake --build _build --target test -- ARGS=--verbose
