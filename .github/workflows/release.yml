@@ -1,0 +1,37 @@
+name: Release Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install RPM tools
+      run: sudo apt-get update && sudo apt-get install -y rpm
+
+    - name: Configure CMake
+      run: cmake -H. -B_build -DCPACK_GENERATOR="TGZ;DEB;RPM"
+
+    - name: Build Project and Package
+      run: cmake --build _build --target package
+
+    - name: Prepare Artifacts
+      run: |
+        mkdir artifacts
+        mv _build/*.tar.gz artifacts/ || true
+        mv _build/*.deb artifacts/ || true
+        mv _build/*.rpm artifacts/ || true
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: artifacts/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
