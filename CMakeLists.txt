@@ -31,8 +31,10 @@ if(BUILD_TESTS)
   enable_testing()
   add_executable(check tests/test1.cpp)
   
-  # Настройка путей заголовочных файлов и линковки под 1.7.0-hunter-9
-  target_include_directories(check PRIVATE ${GTEST_INCLUDE_DIRS})
+  # Достаем точный путь к заголовочным файлам из собранного Hunter'ом таргета gtest
+  get_target_property(GTEST_INC gtest INTERFACE_INCLUDE_DIRECTORIES)
+  target_include_directories(check PRIVATE ${GTEST_INC})
+  
   target_link_libraries(check print gtest gtest_main)
   add_test(NAME check COMMAND check)
 endif()
