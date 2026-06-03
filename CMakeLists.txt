@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 include("cmake/HunterGate.cmake")
 HunterGate(
-    URL "https://github.com/cpp-pm/hunter/archive/v0.23.251.tar.gz"
+    URL "https://github.com"
     SHA1 "5659b15dc0884d4b03dbd95710e6a1fa0fc3258d"
     FILEPATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Hunter/config.cmake"
 )
@@ -30,7 +30,12 @@ target_include_directories(print PUBLIC
 if(BUILD_TESTS)
   enable_testing()
   add_executable(check tests/test1.cpp)
-  target_link_libraries(check print gtest_main)
+  
+  # Явно указываем пути к заголовочным файлам GTest
+  target_include_directories(check PRIVATE ${GTEST_INCLUDE_DIRS})
+  
+  # Линкуем базовый gtest и gtest_main
+  target_link_libraries(check print gtest gtest_main)
   add_test(NAME check COMMAND check)
 endif()
 
