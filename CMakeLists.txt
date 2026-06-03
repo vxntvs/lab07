@@ -31,9 +31,8 @@ if(BUILD_TESTS)
   enable_testing()
   add_executable(check tests/test1.cpp)
   
-  # Достаем точный путь к заголовочным файлам из собранного Hunter'ом таргета gtest
-  get_target_property(GTEST_INC gtest INTERFACE_INCLUDE_DIRECTORIES)
-  target_include_directories(check PRIVATE ${GTEST_INC})
+  # Используем точную переменную старого Hunter (в единственном числе)
+  target_include_directories(check PRIVATE ${GTEST_INCLUDE_DIR})
   
   target_link_libraries(check print gtest gtest_main)
   add_test(NAME check COMMAND check)
