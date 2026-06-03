@@ -1,1 +1,1 @@
-hunter_config(GTest VERSION 1.11.0)
+hunter_config(GTest VERSION 1.8.0)

@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  # Пробрасываем флаг игнорирования uninitialized варнинга на уровне всей ОС в CI
+  CXXFLAGS: "-Wno-error=maybe-uninitialized"
+  CFLAGS: "-Wno-error=maybe-uninitialized"
+
 jobs:
   build:
     runs-on: ubuntu-latest
