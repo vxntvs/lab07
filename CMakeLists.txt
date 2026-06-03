@@ -31,8 +31,9 @@ if(BUILD_TESTS)
   enable_testing()
   add_executable(check tests/test1.cpp)
   
-  # Используем точную переменную старого Hunter (в единственном числе)
-  target_include_directories(check PRIVATE ${GTEST_INCLUDE_DIR})
+  # Универсальный поиск директории с gtest.h в окружении Hunter
+  find_path(REAL_GTEST_INCLUDE_DIR gtest/gtest.h)
+  target_include_directories(check PRIVATE ${REAL_GTEST_INCLUDE_DIR})
   
   target_link_libraries(check print gtest gtest_main)
   add_test(NAME check COMMAND check)
