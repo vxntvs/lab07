@@ -14,7 +14,8 @@ set(PRINT_VERSION_PATCH 0)
 set(PRINT_VERSION "${PRINT_VERSION_MAJOR}.${PRINT_VERSION_MINOR}.${PRINT_VERSION_PATCH}")
 set(PRINT_VERSION_STRING "v${PRINT_VERSION}")
 
-# Явно конфигурируем версию GTest до вызова hunter_add_package
+# Разрешаем вызов hunter_config напрямую в текущем файле
+set(HUNTER_ALLOW_CONFIG_LOADING YES)
 hunter_config(GTest VERSION 1.7.0-hunter-9)
 
 hunter_add_package(GTest)
