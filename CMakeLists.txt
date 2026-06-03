@@ -28,13 +28,13 @@ option(BUILD_TESTS "Build tests" OFF)
 
 if(BUILD_TESTS)
   enable_testing()
-  add_executable(test1 test.cpp)
+  # Исправлен путь к файлу тестов под вашу структуру репозитория
+  add_executable(test1 tests/test1.cpp)
   target_link_libraries(test1 print GTest::gtest_main)
   add_test(NAME test1 COMMAND test1)
 endif()
 
-# РЎР±РѕСЂРєР° РёСЃРїРѕР»РЅСЏРµРјРѕРіРѕ РґРµРјРѕ-РїСЂРёР»РѕР¶РµРЅРёСЏ
+# Сборка исполнительного демо-приложения
 add_executable(demo ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp)
 target_link_libraries(demo print)
 install(TARGETS demo RUNTIME DESTINATION bin)
-
