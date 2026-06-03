@@ -31,11 +31,12 @@ if(BUILD_TESTS)
   enable_testing()
   add_executable(check tests/test1.cpp)
   
-  # Универсальный поиск директории с gtest.h в окружении Hunter
+  # Автоматический поиск путей к заголовочным файлам (уже успешно работает)
   find_path(REAL_GTEST_INCLUDE_DIR gtest/gtest.h)
   target_include_directories(check PRIVATE ${REAL_GTEST_INCLUDE_DIR})
   
-  target_link_libraries(check print gtest gtest_main)
+  # Используем переменные библиотек старого Hunter и современные таргеты-заглушки для надежности
+  target_link_libraries(check print ${GTEST_LIBRARIES} GTest::gtest GTest::gtest_main)
   add_test(NAME check COMMAND check)
 endif()
 
